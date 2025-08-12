@@ -37,7 +37,7 @@ function UploadFile() {
     try {
       setStatus("Uploading...");
 
-      const res = await fetch("http://localhost:5000/upload", {
+      const res = await fetch("https://file-sharing-app-backend-mt69.onrender.com/upload", {
         method: "POST",
         headers: {
           Authorization: `Bearer ${token}`,

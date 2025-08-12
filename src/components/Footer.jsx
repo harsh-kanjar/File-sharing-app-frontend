@@ -13,6 +13,7 @@ function Footer() {
         <div className="text-center md:text-left">
           <h2 className="text-lg font-semibold">ACloud</h2>
           <p className="text-sm text-gray-300">© 2025 All rights reserved.</p>
+          <p className="text-sm text-gray-300">Hobby project for learning purpose</p>
         </div>
 
         <div className="flex flex-wrap justify-center md:justify-end gap-4 text-sm">

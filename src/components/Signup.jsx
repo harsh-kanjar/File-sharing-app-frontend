@@ -35,7 +35,7 @@ export default function Signup({ onSignup }) {
         password,
       };
 
-      const res = await fetch("http://localhost:5000/register", {
+      const res = await fetch("https://file-sharing-app-backend-mt69.onrender.comregister", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
