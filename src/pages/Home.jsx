@@ -66,14 +66,11 @@ function Home() {
   const [mUsername, setMUsername] = useState();
   const [openModal, setOpenModal] = useState(false)
 
-
   // -------- Fetch Files --------
   useEffect(() => {
     const cachedFiles = sessionStorage.getItem("cachedFiles");
     if (cachedFiles) {
-      setFiles(JSON.parse(cachedFiles));
-      setLoading(false);
-      return;
+      setFiles(JSON.parse(cachedFiles)); // show cached instantly
     }
 
     const fetchFiles = async () => {
@@ -84,7 +81,7 @@ function Home() {
           return;
         }
 
-        const res = await fetch("https://file-sharing-app-backend-mt69.onrender.com/files", {
+        const res = await fetch("http://localhost:5000/files", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ token }),
@@ -139,7 +136,7 @@ function Home() {
 
     try {
       setDeletingIds((prev) => [...prev, fileId]);
-      const res = await fetch(`https://file-sharing-app-backend-mt69.onrender.com/delete/${fileId}`, {
+      const res = await fetch(`http://localhost:5000/delete/${fileId}`, {
         method: "DELETE",
         headers: { Authorization: `Bearer ${token}`, "Content-Type": "application/json" },
         body: JSON.stringify({ fileLink: fileLink })
@@ -180,7 +177,7 @@ function Home() {
     setShareError("");
 
     try {
-      const res = await fetch("https://file-sharing-app-backend-mt69.onrender.com/share-file", {
+      const res = await fetch("http://localhost:5000/share-file", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

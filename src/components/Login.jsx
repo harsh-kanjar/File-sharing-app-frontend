@@ -35,7 +35,7 @@ export default function Login({ onLogin }) {
         password,
       };
 
-      const res = await fetch("https://file-sharing-app-backend-mt69.onrender.com/login", {
+      const res = await fetch("http://localhost:5000/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
