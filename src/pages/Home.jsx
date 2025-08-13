@@ -12,6 +12,7 @@ import { AiFillDelete } from "react-icons/ai";
 import { RiUserShared2Fill } from "react-icons/ri";
 import { useNavigate } from "react-router-dom";
 import MainLayout from "../Layouts/MainLayout";
+import { MoreOptions } from "../components";
 
 // -------- Get File Icon --------
 const getFileIcon = (fileName) => {
@@ -206,6 +207,7 @@ function Home() {
 
   return (
     <MainLayout>
+      <MoreOptions/>
       <div className="px-6">
         <div className="flex items-center justify-between mb-4">
           <h1 className="text-3xl font-semibold">My Files</h1>

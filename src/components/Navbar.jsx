@@ -1,20 +1,38 @@
-import React, { useState, useEffect } from "react";
-import { FaBars, FaTimes, FaUserCircle } from "react-icons/fa";
-import { Link, useNavigate } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 export default function Navbar() {
-  const [isOpen, setIsOpen] = useState(false);
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [username, setUsername] = useState("");
   const navigate = useNavigate();
 
   useEffect(() => {
-    setIsLoggedIn(!!localStorage.getItem("t-shrf"));
-  }, []);
+    const storedUsername = localStorage.getItem("t-username");
+    const token = localStorage.getItem("t-shrf");
 
-  const toggleMenu = () => setIsOpen(!isOpen);
+    if (storedUsername) {
+      setUsername(storedUsername);
+    } else if (token) {
+      fetch("http://localhost:5000/get-info", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ token }),
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          if (data?.user?.username) {
+            localStorage.setItem("t-username", data.user.username);
+            setUsername(data.user.username);
+          }
+        })
+        .catch((err) => {
+          console.error("Error fetching user info:", err);
+        });
+    }
+  }, []);
 
   const handleLogout = () => {
     localStorage.removeItem("t-shrf");
+    localStorage.removeItem("t-username");
     navigate("/signup");
   };
 
@@ -27,74 +45,39 @@ export default function Navbar() {
         WebkitBackdropFilter: "blur(10px)",
       }}
     >
-      <div className="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center text-white">
+      <div className="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center text-white relative">
         {/* Logo */}
         <div className="text-2xl md:text-3xl font-bold tracking-tight cursor-pointer hover:scale-105 transition-transform duration-200">
           ACloud
         </div>
 
-        {/* Desktop Navigation */}
-        <div className="hidden md:flex items-center space-x-8 text-base font-medium">
-          {isLoggedIn && (
-            <>
-              <Link
-                to="/"
-                className="relative hover:text-yellow-300 transition-colors duration-200 after:content-[''] after:absolute after:w-0 after:h-[2px] after:bg-yellow-300 after:left-0 after:-bottom-1 hover:after:w-full after:transition-all after:duration-300"
-              >
-                Home
-              </Link>
-              <Link
-                to="/upload"
-                className="relative hover:text-yellow-300 transition-colors duration-200 after:content-[''] after:absolute after:w-0 after:h-[2px] after:bg-yellow-300 after:left-0 after:-bottom-1 hover:after:w-full after:transition-all after:duration-300"
-              >
-                Upload
-              </Link>
+        {/* Username + Avatar with Dropdown */}
+        {username && (
+          <div className="relative group">
+            {/* Avatar + Name */}
+            <div className="flex items-center gap-3 px-3 py-1 rounded-full bg-white/10 group-hover:bg-white/20 transition duration-200 cursor-pointer">
+              <img
+                src="/avatars/ava2.png"
+                alt="User Avatar"
+                className="w-10 h-10 rounded-full object-cover border-2 border-yellow-300 shadow-md"
+              />
+              <span className="text-base font-semibold tracking-wide text-yellow-300">
+                {username}
+              </span>
+            </div>
+
+            {/* Dropdown (stays visible while hovering over it) */}
+            <div className="absolute right-0 top-14 bg-white text-gray-900 rounded-lg shadow-lg py-2 w-40 border border-gray-200 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
               <button
                 onClick={handleLogout}
-                className="bg-yellow-400 text-gray-900 px-4 py-1 rounded-lg shadow-md hover:bg-yellow-300 transition"
+                className="w-full text-left px-4 py-2 hover:bg-gray-100 transition"
               >
                 Logout
               </button>
-            </>
-          )}
-        </div>
-
-        {/* Mobile Menu Toggle */}
-        <div className="md:hidden">
-          <button onClick={toggleMenu} className="text-2xl">
-            {isOpen ? <FaTimes /> : <FaBars />}
-          </button>
-        </div>
+            </div>
+          </div>
+        )}
       </div>
-
-      {/* Mobile Dropdown */}
-      {isOpen && (
-        <div className="md:hidden px-4 pb-4 text-white bg-[#1e3c72] border-t border-white/10 shadow-inner animate-slideDown">
-          {isLoggedIn && (
-            <>
-              <Link
-                to="/"
-                className="block py-2 hover:text-yellow-300 transition"
-              >
-                Home
-              </Link>
-              <Link
-                to="/upload"
-                className="block py-2 hover:text-yellow-300 transition"
-              >
-                Upload
-              </Link>
-              <div
-                onClick={handleLogout}
-                className="flex items-center gap-2 mt-3 cursor-pointer bg-yellow-400 text-gray-900 px-3 py-2 rounded-lg shadow hover:bg-yellow-300 transition"
-              >
-                <FaUserCircle className="text-xl" />
-                <span>Logout</span>
-              </div>
-            </>
-          )}
-        </div>
-      )}
     </nav>
   );
 }

@@ -2,7 +2,7 @@ import React from 'react';
 
 function Footer() {
   return (
-    <footer className="w-full text-white py-6 px-4 mt-10"
+    <footer className="w-full text-white py-6 px-4 "
       style={{
         background: 'linear-gradient(90deg, #0e1e45, #3b538f, #0e1e45)',
         backdropFilter: 'blur(12px)',
