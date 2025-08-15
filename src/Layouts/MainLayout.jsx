@@ -1,11 +1,24 @@
-import React from 'react'
+import React from 'react';
 
 function MainLayout({ children }) {
   return (
-    <div className='mt-[110px]   ml-4 h-[560px] overflow-hidden w-[98%] border border-gray-200 rounded-md'>
-       {children}
+    <div
+      className="flex flex-col min-h-screen rounded-md"
+      style={{
+        backgroundImage: "url('/bg/bg.jpg')",
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+        backgroundRepeat: "no-repeat",
+      }}
+    >
+      {/* Main content will grow to push footer down */}
+      <main className="flex-1 overflow-auto">
+        {children}
+      </main>
+
+      
     </div>
-  )
+  );
 }
 
-export default MainLayout
+export default MainLayout;

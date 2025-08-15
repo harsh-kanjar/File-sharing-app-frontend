@@ -14,7 +14,7 @@ function MoreOptions( ) {
   return (
     <>
       {/* Desktop Navigation */}
-      <div className="hidden md:flex items-center space-x-8 text-base font-medium m-10">
+      <div className="hidden md:flex items-center   text-base font-medium m-10">
         {/* <Link
           to="/"
           className="relative hover:text-yellow-300 transition-colors duration-200 after:content-[''] after:absolute after:w-0 after:h-[2px] after:bg-yellow-300 after:left-0 after:-bottom-1 hover:after:w-full after:transition-all after:duration-300"
@@ -23,7 +23,7 @@ function MoreOptions( ) {
         </Link> */}
         <Link
           to="/upload"
-          className="relative hover:text-yellow-300 transition-colors duration-200 after:content-[''] after:absolute after:w-0 after:h-[2px] after:bg-yellow-300 after:left-0 after:-bottom-1 hover:after:w-full after:transition-all after:duration-300"
+          className="font-semibold text-[#3C589D] bg-white/30 backdrop-blur-md border border-white/20 rounded-2xl px-6 py-3 shadow-lg"
         >
           Upload
         </Link>

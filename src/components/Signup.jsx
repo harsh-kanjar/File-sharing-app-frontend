@@ -1,48 +1,6 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-
-import { useRef } from "react";
-
-function SignupCard3D({ children }) {
-  const cardRef = React.useRef(null);
-
-  const handleMouseMove = (e) => {
-    const card = cardRef.current;
-    const rect = card.getBoundingClientRect();
-    const x = e.clientX - rect.left;
-    const y = e.clientY - rect.top;
-    const centerX = rect.width / 2;
-    const centerY = rect.height / 2;
-
-    const rotateX = ((y - centerY) / centerY) * -8;
-    const rotateY = ((x - centerX) / centerX) * 8;
-
-    card.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.02)`;
-  };
-
-  const resetTransform = () => {
-    cardRef.current.style.transform = "rotateX(0deg) rotateY(0deg) scale(1)";
-  };
-
-  return (
-    <div
-      ref={cardRef}
-      onMouseMove={handleMouseMove}
-      onMouseLeave={resetTransform}
-      className="w-full max-w-md rounded-3xl shadow-lg p-8 relative border border-white/20 transition-transform duration-150 ease-out will-change-transform"
-      style={{
-        transformStyle: "preserve-3d",
-        perspective: "1000px",
-        background: "rgba(216, 213, 213, 0.4)", // dark transparent background for readability
-        backdropFilter: "blur(8px)", // soft blur only for the glass effect
-        color: "white" // ensures text stays readable
-      }}
-    >
-      {children}
-    </div>
-  );
-}
-
+import Card from "../Design/Card";
 
 
 export default function Signup() {
@@ -85,7 +43,7 @@ export default function Signup() {
 
     try {
       setLoading(true);
-      const res = await fetch("http://localhost:5000/send-otp", {
+      const res = await fetch("https://file-sharing-app-backend-5xpl.onrender.com/send-otp", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email: email.toLowerCase().trim() }),
@@ -110,7 +68,7 @@ export default function Signup() {
 
     try {
       setLoading(true);
-      const res = await fetch("http://localhost:5000/register", {
+      const res = await fetch("https://file-sharing-app-backend-5xpl.onrender.com/register", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -136,18 +94,18 @@ export default function Signup() {
     <div
       className="min-h-screen flex items-center justify-center p-6 bg-gradient-to-br from-[#EAF0FF]/80 to-[#FDFEFF]/80"
       style={{
-        backgroundImage: "url('/bg/signup.jpg')",
+        backgroundImage: "url('/bg/bg.jpg')",
         backgroundSize: "cover",
         backgroundPosition: "center",
         backgroundRepeat: "no-repeat",
       }}
     >
-      <SignupCard3D>
+      <Card>
         {/* Title */}
-        <h1 className="text-3xl font-bold text-[#3C589D] mb-2 tracking-tight underline">
+        <h1 className="text-3xl font-bold text-white mb-2 tracking-tight underline">
           {step === 1 ? "Create an account" : "Verify your email"}
         </h1>
-        <p className="text-md mb-6 text-black">
+        <p className="text-md mb-6 text-white">
           {step === 1
             ? "Join us today — we'll send you an OTP to verify your email."
             : `We’ve sent an OTP to ${email}. Enter it below to complete your registration.`}
@@ -182,7 +140,7 @@ export default function Signup() {
 
             {/* Email */}
             <label className="block">
-              <span className="text-sm font-medium text-white">Email</span>
+              <span className="text-md font-medium text-white">Email</span>
               <input
                 type="email"
                 value={email}
@@ -194,7 +152,7 @@ export default function Signup() {
 
             {/* Password */}
             <label className="block relative">
-              <span className="text-sm font-medium text-white">Password</span>
+              <span className="text-md font-medium text-white">Password</span>
               <input
                 type={showPassword ? "text" : "password"}
                 value={password}
@@ -205,7 +163,7 @@ export default function Signup() {
               <button
                 type="button"
                 onClick={() => setShowPassword((prev) => !prev)}
-                className="absolute right-3 top-9 text-xs text-gray-500 hover:text-gray-700"
+                className=" mt-2 absolute right-3 top-9 text-md text-black"
               >
                 {showPassword ? "Hide" : "Show"}
               </button>
@@ -213,7 +171,7 @@ export default function Signup() {
 
             {/* Confirm Password */}
             <label className="block">
-              <span className="text-sm font-medium text-white">Confirm Password</span>
+              <span className="text-md font-medium text-white">Confirm Password</span>
               <input
                 type={showPassword ? "text" : "password"}
                 value={confirm}
@@ -307,7 +265,7 @@ export default function Signup() {
             </div>
           </div>
         )}
-      </SignupCard3D>
+      </Card>
     </div>
 
   );

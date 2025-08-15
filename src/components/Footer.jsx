@@ -1,17 +1,18 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 function Footer() {
   return (
-    <footer className="w-full text-white py-6 px-4 "
-      style={{
-        background: 'linear-gradient(90deg, #0e1e45, #3b538f, #0e1e45)',
-        backdropFilter: 'blur(12px)',
-        WebkitBackdropFilter: 'blur(12px)',
-      }}
-    >
+    <footer className="w-full text-white py-6 px-4 bg-blue-400 mt-auto">
       <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-4">
         <div className="text-center md:text-left">
-          <h2 className="text-lg font-semibold">ACloud</h2>
+          <div className="cursor-pointer hover:scale-105 transition-transform duration-200">
+            <Link to={"/"}><img
+              src="/logo2.png"
+              alt="ACloud Logo"
+              className="h-16 md:h-18 object-contain mix-blend-multiply"
+            /></Link>
+          </div>
           <p className="text-sm text-gray-300">© 2025 All rights reserved.</p>
           <p className="text-sm text-gray-300">Hobby project for learning purpose</p>
         </div>
